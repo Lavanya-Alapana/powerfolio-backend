@@ -27,8 +27,7 @@ mongoose
     process.exit(1);
   });
 
-// Mount routers
-// Mount routers
+
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/projects', require('./routes/projects'));
 app.use('/api/upload', require('./routes/upload'));
@@ -37,15 +36,7 @@ app.use('/api/admin', require('./routes/admin'));
 // Make uploads folder static
 app.use('/uploads', express.static('uploads'));
 
-// Serve static assets in production
-if (process.env.NODE_ENV === 'production') {
-  // Set static folder
-  app.use(express.static('client/build'));
 
-  app.get(/.*/, (req, res) => {
-    res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'));
-  });
-}
 
 // Error handling middleware
 app.use((err, req, res, next) => {
