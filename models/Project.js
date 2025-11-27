@@ -54,6 +54,39 @@ const ProjectSchema = new mongoose.Schema({
     type: [String],
     default: []
   },
+  projectType: {
+    type: String,
+    default: 'Personal'
+  },
+  duration: {
+    type: String
+  },
+  completionDate: {
+    type: Date
+  },
+  demoVideo: {
+    type: String // URL or file path
+  },
+  technologies: {
+    type: [String],
+    default: []
+  },
+  customTechnologies: {
+    type: String
+  },
+  teamMembers: {
+    type: [String],
+    default: []
+  },
+  contactName: {
+    type: String
+  },
+  contactEmail: {
+    type: String
+  },
+  contactImage: {
+    type: String // URL or file path
+  },
   comments: [
     {
       user: {

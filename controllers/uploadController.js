@@ -12,16 +12,16 @@ const storage = multer.diskStorage({
 // Init upload
 const upload = multer({
     storage: storage,
-    limits: { fileSize: 5000000 }, // 5MB limit
+    limits: { fileSize: 100000000 }, // 100MB limit
     fileFilter: function (req, file, cb) {
         checkFileType(file, cb);
     }
-}).single('image'); // Expecting field name 'image'
+}).single('file'); // Expecting field name 'file'
 
 // Check file type
 function checkFileType(file, cb) {
     // Allowed ext
-    const filetypes = /jpeg|jpg|png|gif/;
+    const filetypes = /jpeg|jpg|png|gif|mp4|webm|ogg/;
     // Check ext
     const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
     // Check mime
@@ -30,14 +30,32 @@ function checkFileType(file, cb) {
     if (mimetype && extname) {
         return cb(null, true);
     } else {
-        cb('Error: Images Only!');
+        cb('Error: Images and Videos Only!');
     }
 }
 
-const uploadImage = (req, res) => {
+const uploadFile = (req, res) => {
     upload(req, res, (err) => {
         if (err) {
-            return res.status(400).json({ msg: err });
+            console.error('Upload Error:', err);
+            let message = 'File upload failed';
+
+            if (typeof err === 'string') {
+                message = err;
+            } else if (err.message) {
+                message = err.message;
+            } else {
+                message = JSON.stringify(err);
+            }
+
+            // Handle specific Multer errors for better user feedback
+            if (err.code === 'LIMIT_FILE_SIZE') {
+                message = 'File is too large (Max 100MB)';
+            } else if (err.code === 'LIMIT_UNEXPECTED_FILE') {
+                message = 'Unexpected file field or too many files';
+            }
+
+            return res.status(400).json({ msg: message });
         } else {
             if (req.file == undefined) {
                 return res.status(400).json({ msg: 'No file selected!' });
@@ -52,5 +70,5 @@ const uploadImage = (req, res) => {
 };
 
 module.exports = {
-    uploadImage
+    uploadFile
 };

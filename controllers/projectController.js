@@ -41,16 +41,46 @@ const create = async (req, res) => {
     }
 
     try {
-        const { title, description, longDescription, githubUrl, liveUrl, tags, images, category } = req.body;
+        const {
+            title,
+            description,
+            longDescription,
+            githubUrl,
+            liveUrl,
+            tags,
+            images,
+            category,
+            projectType,
+            duration,
+            completionDate,
+            demoVideo,
+            technologies,
+            customTechnologies,
+            teamMembers,
+            contactName,
+            contactEmail,
+            contactImage
+        } = req.body;
+
         const projectData = {
             title,
             description,
             longDescription,
             githubUrl,
-            liveUrl, // Make sure this matches frontend field name
+            liveUrl,
             tags,
             images,
-            category
+            category,
+            projectType,
+            duration,
+            completionDate,
+            demoVideo,
+            technologies,
+            customTechnologies,
+            teamMembers,
+            contactName,
+            contactEmail,
+            contactImage
         };
         const project = await projectService.createProject(req.user.id, projectData);
         res.json(project);

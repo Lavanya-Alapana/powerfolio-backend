@@ -27,19 +27,40 @@ const createProject = async (userId, projectData) => {
         liveUrl,
         githubUrl,
         category,
-        tags
+        tags,
+        projectType,
+        duration,
+        completionDate,
+        demoVideo,
+        technologies,
+        customTechnologies,
+        teamMembers,
+        contactName,
+        contactEmail,
+        contactImage
     } = projectData;
 
     const newProject = new Project({
         user: userId,
         title,
         description,
-        longDescription, // Add this to model if not present, wait, model doesn't have it? I need to check model again.
+        longDescription,
         images: Array.isArray(images) ? images : [],
         liveUrl,
         githubUrl,
         category,
         tags: Array.isArray(tags) ? tags : [],
+        projectType,
+        duration,
+        completionDate,
+        demoVideo,
+        technologies: Array.isArray(technologies) ? technologies : [],
+        customTechnologies,
+        teamMembers: Array.isArray(teamMembers) ? teamMembers : [],
+        contactName,
+        contactName,
+        contactEmail,
+        contactImage
     });
 
     const project = await newProject.save();
@@ -66,7 +87,17 @@ const updateProject = async (userId, projectId, projectData) => {
         liveUrl,
         githubUrl,
         category,
-        tags
+        tags,
+        projectType,
+        duration,
+        completionDate,
+        demoVideo,
+        technologies,
+        customTechnologies,
+        teamMembers,
+        contactName,
+        contactEmail,
+        contactImage
     } = projectData;
 
     // Build project object
@@ -79,6 +110,17 @@ const updateProject = async (userId, projectId, projectData) => {
     if (githubUrl) projectFields.githubUrl = githubUrl;
     if (category) projectFields.category = category;
     if (tags) projectFields.tags = Array.isArray(tags) ? tags : [];
+    if (projectType) projectFields.projectType = projectType;
+    if (duration) projectFields.duration = duration;
+    if (completionDate) projectFields.completionDate = completionDate;
+    if (demoVideo) projectFields.demoVideo = demoVideo;
+    if (technologies) projectFields.technologies = Array.isArray(technologies) ? technologies : [];
+    if (customTechnologies) projectFields.customTechnologies = customTechnologies;
+    if (teamMembers) projectFields.teamMembers = Array.isArray(teamMembers) ? teamMembers : [];
+    if (contactName) projectFields.contactName = contactName;
+    if (contactName) projectFields.contactName = contactName;
+    if (contactEmail) projectFields.contactEmail = contactEmail;
+    if (contactImage) projectFields.contactImage = contactImage;
 
     project = await Project.findByIdAndUpdate(
         projectId,

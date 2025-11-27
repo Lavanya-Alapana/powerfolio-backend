@@ -6,6 +6,6 @@ const auth = require('../middleware/auth');
 // @route   POST api/upload
 // @desc    Upload an image
 // @access  Private
-router.post('/', auth, uploadController.uploadImage);
+router.post('/', auth, uploadController.uploadFile);
 
 module.exports = router;
