@@ -1,7 +1,7 @@
 const Project = require('../models/Project');
 
 const getAllProjects = async () => {
-    const projects = await Project.find().sort({ createdAt: -1 }).populate('user', 'name');
+    const projects = await Project.find({ status: 'approved' }).sort({ createdAt: -1 }).populate('user', 'name');
     return projects;
 };
 
